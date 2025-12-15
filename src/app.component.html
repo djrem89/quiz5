@@ -1,0 +1,81 @@
+<main class="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-slate-900 to-sky-900">
+  <div class="w-full max-w-4xl mx-auto">
+    @switch (quizState()) {
+      @case ('notStarted') {
+        <div class="text-center bg-slate-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-slate-700">
+          @if (isAuthenticated()) {
+            <div class="flex justify-between items-center mb-4">
+               <h2 class="text-xl text-slate-300">Benvenuto, <span class="font-bold text-sky-400">{{ currentUser()?.username }}</span>!</h2>
+               <button (click)="logout()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-transform transform hover:scale-105 shadow-md">
+                Logout
+              </button>
+            </div>
+          }
+          <h1 class="text-4xl md:text-5xl font-bold text-sky-400 mb-4">Quiz a Tempo</h1>
+          <p class="text-lg text-slate-300 mb-2">Metti alla prova le tue conoscenze generali.</p>
+          <p class="text-slate-400 mb-8">Personalizza la tua sfida scegliendo la materia, il numero di domande e il tempo a disposizione.</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button (click)="startQuizSelection()" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+              Inizia il Quiz
+            </button>
+            <button (click)="goToAdmin()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-3 px-8 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+              Gestisci Domande
+            </button>
+          </div>
+        </div>
+      }
+      @case ('categorySelection') {
+        <div class="text-center bg-slate-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-slate-700">
+          <h1 class="text-4xl md:text-5xl font-bold text-sky-400 mb-6">Scegli una Materia</h1>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            @for (category of categories(); track category) {
+              <button (click)="selectCategory(category)" class="bg-slate-700 hover:bg-sky-700 text-white font-bold py-4 px-6 rounded-lg text-lg transition-all transform hover:scale-105 shadow-lg">
+                {{ category }}
+              </button>
+            }
+          </div>
+           <button (click)="goHome()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-6 rounded-lg transition">
+              Indietro
+            </button>
+        </div>
+      }
+      @case('settings') {
+        <app-settings />
+      }
+      @case ('loading') {
+        <div class="text-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-sky-400 mx-auto"></div>
+          <p class="mt-4 text-xl text-slate-300">Generazione del quiz in corso...</p>
+          <p class="text-slate-400">L'IA sta preparando le tue domande!</p>
+        </div>
+      }
+      @case ('inProgress') {
+        <app-quiz (imageClicked)="openImageModal($event)" />
+      }
+      @case ('finished') {
+        <app-results />
+      }
+      @case ('admin') {
+        @if(isAuthenticated()) {
+          <app-admin (imageClicked)="openImageModal($event)" />
+        }
+      }
+      @case ('login') {
+        <app-login (loginSuccess)="onAdminLoginSuccess()" />
+      }
+      @case ('error') {
+        <div class="text-center bg-red-900/50 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-red-700">
+          <h2 class="text-3xl font-bold text-red-400 mb-4">Oops! Qualcosa è andato storto.</h2>
+          <p class="text-lg text-red-300 mb-6">Impossibile generare il quiz. Potrebbe esserci un problema con la chiave API o il servizio. Riprova più tardi.</p>
+           <button (click)="quizService.resetQuiz()" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+            Torna alla Home
+          </button>
+        </div>
+      }
+    }
+  </div>
+
+  @if (selectedImageUrl(); as url) {
+    <app-image-modal [imageUrl]="url" (close)="closeImageModal()" />
+  }
+</main>

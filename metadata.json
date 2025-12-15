@@ -1,0 +1,5 @@
+{
+  "name": "Quiz a Tempo",
+  "description": "Un'app per quiz a risposta multipla generata dall'IA con un timer di 45 minuti. Metti alla prova le tue conoscenze con 30 domande uniche ogni volta.",
+  "requestFramePermissions": []
+}

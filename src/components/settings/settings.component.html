@@ -1,0 +1,54 @@
+
+<div class="text-center bg-slate-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-slate-700 animate-fade-in">
+  <h1 class="text-4xl md:text-5xl font-bold text-sky-400 mb-2">Configura il tuo Quiz</h1>
+  <p class="text-slate-400 mb-8">Categoria: <strong class="text-sky-300">{{ selectedCategory() }}</strong></p>
+
+  <!-- Number of Questions Slider -->
+  <div class="mb-8">
+    <label for="numQuestions" class="block text-lg font-medium text-slate-200 mb-3">Numero di Domande: <span class="font-bold text-white">{{ numQuestions() }}</span></label>
+    @if(maxQuestions() > 0) {
+      <input 
+        id="numQuestions" 
+        type="range" 
+        [min]="1" 
+        [max]="maxQuestions()" 
+        [value]="numQuestions()" 
+        (input)="onSliderChange($event)"
+        class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-sky-500">
+    } @else {
+        <p class="text-red-400 bg-red-900/50 p-3 rounded-lg">Non ci sono domande disponibili per questa categoria. Vai al pannello di amministrazione per aggiungerne qualcuna.</p>
+    }
+  </div>
+  
+  <!-- Duration Selection -->
+  <div class="mb-10">
+    <label class="block text-lg font-medium text-slate-200 mb-3">Durata del Quiz</label>
+    <div class="flex justify-center gap-3">
+        @for(duration of availableDurations; track duration.value) {
+            <button 
+                (click)="setDuration(duration.value)"
+                [class.bg-sky-600]="selectedDuration() === duration.value"
+                [class.ring-2]="selectedDuration() === duration.value"
+                [class.ring-sky-400]="selectedDuration() === duration.value"
+                [class.bg-slate-600]="selectedDuration() !== duration.value"
+                [class.hover:bg-slate-500]="selectedDuration() !== duration.value"
+                class="text-white font-bold py-2 px-6 rounded-lg transition">
+                {{ duration.label }}
+            </button>
+        }
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="flex flex-col sm:flex-row gap-4 justify-center">
+    <button (click)="goBack()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-3 px-8 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+      Indietro
+    </button>
+    <button 
+      (click)="startQuiz()" 
+      [disabled]="maxQuestions() === 0"
+      class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+      Avvia Quiz
+    </button>
+  </div>
+</div>
