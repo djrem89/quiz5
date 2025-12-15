@@ -3,12 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service.js';
 import { QuizService } from '../../services/quiz.service.js';
 
-@Component({
-  selector: 'app-login',
-  imports: [CommonModule],
-  templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
 export class LoginComponent {
   authService = inject(AuthService);
   quizService = inject(QuizService);
@@ -52,3 +46,10 @@ export class LoginComponent {
     this.quizService.resetQuiz();
   }
 }
+
+Component({
+  selector: 'app-login',
+  imports: [CommonModule],
+  templateUrl: './src/components/login/login.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})(LoginComponent);

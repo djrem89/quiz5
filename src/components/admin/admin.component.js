@@ -3,12 +3,6 @@ import { CommonModule } from '@angular/common';
 import { QuizService } from '../../services/quiz.service.js';
 import '../../models/quiz.model.js'; // Keep import for module resolution, even if file is empty
 
-@Component({
-  selector: 'app-admin',
-  imports: [CommonModule],
-  templateUrl: './admin.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
 export class AdminComponent {
   quizService = inject(QuizService);
   imageClicked = output();
@@ -176,3 +170,10 @@ export class AdminComponent {
     this.quizService.resetQuiz();
   }
 }
+
+Component({
+  selector: 'app-admin',
+  imports: [CommonModule],
+  templateUrl: './src/components/admin/admin.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})(AdminComponent);

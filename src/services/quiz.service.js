@@ -73,14 +73,13 @@ const INITIAL_QUESTIONS = [
 const QUIZ_STORAGE_KEY = 'quiz-session';
 const QUESTIONS_STORAGE_KEY = 'quiz-questions';
 
-@Injectable({ providedIn: 'root' })
 export class QuizService {
   // --- SEZIONE FIREBASE (Disattivata) ---
-  // private firebaseService = inject(FirebaseService); // Decommenta nel PASSO 4
-  private firestoreIds = new Map(); // Mappa l'indice dell'array all'ID del documento Firestore
+  // firebaseService = inject(FirebaseService); // Decommenta nel PASSO 4
+  firestoreIds = new Map(); // Mappa l'indice dell'array all'ID del documento Firestore
   // --- FINE SEZIONE FIREBASE ---
 
-  private readonly DEFAULT_QUIZ_DURATION_SECONDS = 45 * 60;
+  DEFAULT_QUIZ_DURATION_SECONDS = 45 * 60;
 
   quizState = signal('notStarted');
   questions = signal([]);
@@ -88,7 +87,7 @@ export class QuizService {
   userAnswers = signal(new Map());
   
   timeRemaining = signal(this.DEFAULT_QUIZ_DURATION_SECONDS);
-  private timerId = null;
+  timerId = null;
   
   selectedCategory = signal(null);
 
@@ -116,7 +115,7 @@ export class QuizService {
 
   totalQuestions = computed(() => this.currentQuizQuestions().length);
 
-  private ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   constructor() {
     this.loadQuestions();
@@ -149,7 +148,7 @@ export class QuizService {
     });
   }
   
-  private async loadQuestions() {
+  async loadQuestions() {
     if (USE_FIREBASE) {
       // --- SEZIONE FIREBASE (Disattivata) ---
       // console.log("Caricamento domande da Firebase...");
@@ -172,7 +171,7 @@ export class QuizService {
     }
   }
 
-  private loadStateFromStorage() {
+  loadStateFromStorage() {
     const savedStateJSON = localStorage.getItem(QUIZ_STORAGE_KEY);
     if (savedStateJSON) {
         try {
@@ -195,7 +194,7 @@ export class QuizService {
     }
   }
 
-  private loadQuestionsFromStorage() {
+  loadQuestionsFromStorage() {
       const savedQuestions = localStorage.getItem(QUESTIONS_STORAGE_KEY);
       if (savedQuestions) {
           try {
@@ -353,3 +352,5 @@ export class QuizService {
     }
   }
 }
+
+Injectable({ providedIn: 'root' })(QuizService);

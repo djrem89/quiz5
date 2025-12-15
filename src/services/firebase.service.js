@@ -24,13 +24,10 @@ const firebaseConfig = {
 };
 // --- FINE SEZIONE FIREBASE ---
 
-@Injectable({
-  providedIn: 'root',
-})
 export class FirebaseService {
-  app;
-  db;
-  questionsCollection;
+  app = null;
+  db = null;
+  questionsCollection = null;
 
   constructor() {
     this.app = initializeApp(firebaseConfig);
@@ -64,3 +61,7 @@ export class FirebaseService {
     await deleteDoc(questionDoc);
   }
 }
+
+Injectable({
+  providedIn: 'root',
+})(FirebaseService);

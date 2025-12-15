@@ -1,9 +1,8 @@
 import { Injectable, signal, computed } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
 export class AuthService {
   // Utenti hardcoded per la demo
-  private readonly USERS = new Map([
+  USERS = new Map([
     ['user', 'password'],
     ['admin', 'admin'],
   ]);
@@ -24,3 +23,5 @@ export class AuthService {
     this.currentUser.set(null);
   }
 }
+
+Injectable({ providedIn: 'root' })(AuthService);

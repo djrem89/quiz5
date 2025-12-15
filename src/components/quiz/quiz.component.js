@@ -2,12 +2,6 @@ import { Component, ChangeDetectionStrategy, inject, signal, computed, output } 
 import { CommonModule } from '@angular/common';
 import { QuizService } from '../../services/quiz.service.js';
 
-@Component({
-  selector: 'app-quiz',
-  imports: [CommonModule],
-  templateUrl: './quiz.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
 export class QuizComponent {
   quizService = inject(QuizService);
   imageClicked = output();
@@ -61,3 +55,10 @@ export class QuizComponent {
     this.imageClicked.emit(imageUrl);
   }
 }
+
+Component({
+  selector: 'app-quiz',
+  imports: [CommonModule],
+  templateUrl: './src/components/quiz/quiz.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})(QuizComponent);

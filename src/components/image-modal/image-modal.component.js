@@ -1,12 +1,6 @@
 import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-@Component({
-  selector: 'app-image-modal',
-  imports: [CommonModule],
-  templateUrl: './image-modal.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
 export class ImageModalComponent {
   imageUrl = input.required();
   close = output();
@@ -22,3 +16,10 @@ export class ImageModalComponent {
     }
   }
 }
+
+Component({
+  selector: 'app-image-modal',
+  imports: [CommonModule],
+  templateUrl: './src/components/image-modal/image-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})(ImageModalComponent);

@@ -2,12 +2,6 @@ import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@a
 import { CommonModule } from '@angular/common';
 import { QuizService } from '../../services/quiz.service.js';
 
-@Component({
-  selector: 'app-settings',
-  imports: [CommonModule],
-  templateUrl: './settings.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
 export class SettingsComponent {
   quizService = inject(QuizService);
   
@@ -47,3 +41,10 @@ export class SettingsComponent {
     this.quizService.goToCategorySelection();
   }
 }
+
+Component({
+  selector: 'app-settings',
+  imports: [CommonModule],
+  templateUrl: './src/components/settings/settings.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})(SettingsComponent);

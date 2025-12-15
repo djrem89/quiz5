@@ -2,12 +2,6 @@ import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/c
 import { CommonModule } from '@angular/common';
 import { QuizService } from '../../services/quiz.service.js';
 
-@Component({
-  selector: 'app-results',
-  imports: [CommonModule],
-  templateUrl: './results.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
 export class ResultsComponent {
   quizService = inject(QuizService);
   score = this.quizService.score;
@@ -30,3 +24,10 @@ export class ResultsComponent {
     this.quizService.resetQuiz();
   }
 }
+
+Component({
+  selector: 'app-results',
+  imports: [CommonModule],
+  templateUrl: './src/components/results/results.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})(ResultsComponent);

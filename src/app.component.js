@@ -9,12 +9,6 @@ import { AuthService } from './services/auth.service.js';
 import { SettingsComponent } from './components/settings/settings.component.js';
 import { ImageModalComponent } from './components/image-modal/image-modal.component.js';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  imports: [CommonModule, QuizComponent, ResultsComponent, AdminComponent, LoginComponent, SettingsComponent, ImageModalComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
 export class AppComponent {
   quizService = inject(QuizService);
   authService = inject(AuthService);
@@ -63,3 +57,10 @@ export class AppComponent {
     this.selectedImageUrl.set(null);
   }
 }
+
+Component({
+  selector: 'app-root',
+  templateUrl: './src/app.component.html',
+  imports: [CommonModule, QuizComponent, ResultsComponent, AdminComponent, LoginComponent, SettingsComponent, ImageModalComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})(AppComponent);
